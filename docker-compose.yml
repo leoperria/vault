@@ -1,0 +1,17 @@
+version: "2"
+services:
+  boilerplate-api:
+    build: .
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/vault
+    volumes:
+      - .:/app
+    ports:
+      - "3010:3010"
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017-27019:27017-27019"
