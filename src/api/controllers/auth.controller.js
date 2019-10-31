@@ -1,18 +1,18 @@
-const httpStatus = require('http-status');
-const User = require('../models/user.model');
-const RefreshToken = require('../models/refreshToken.model');
-const moment = require('moment-timezone');
-const { jwtExpirationInterval } = require('../../config/vars');
-const { omit } = require('lodash');
+const httpStatus = require("http-status");
+const User = require("../models/user.model");
+const RefreshToken = require("../models/refreshToken.model");
+const moment = require("moment-timezone");
+const { jwtExpirationInterval } = require("../../config/vars");
+const { omit } = require("lodash");
 
 /**
  * Returns a formated object with tokens
  * @private
  */
 function generateTokenResponse(user, accessToken) {
-    const tokenType = 'Bearer';
+    const tokenType = "Bearer";
     const refreshToken = RefreshToken.generate(user).token;
-    const expiresIn = moment().add(jwtExpirationInterval, 'minutes');
+    const expiresIn = moment().add(jwtExpirationInterval, "minutes");
     return {
         tokenType, accessToken, refreshToken, expiresIn,
     };
@@ -24,7 +24,7 @@ function generateTokenResponse(user, accessToken) {
  */
 exports.register = async (req, res, next) => {
     try {
-        const userData = omit(req.body, 'role');
+        const userData = omit(req.body, "role");
         const user = await (new User(userData)).save();
         const userTransformed = user.transform();
         const token = generateTokenResponse(user, user.token());

@@ -23,8 +23,16 @@
             "off",
             "ignore"
         ],
-        "max-len": ["error",{"code": 140}]
-
+        "max-len": [
+            "error",
+            {
+                "code": 140
+            }
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ]
     },
     "env": {
         "node": true,
@@ -32,8 +40,5 @@
     },
     "parserOptions": {
         "ecmaVersion": 8
-    },
-    "extends": [
-        "airbnb-base"
-    ]
+    }
 }

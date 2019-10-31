@@ -1,6 +1,6 @@
-const httpStatus = require('http-status');
-const { omit } = require('lodash');
-const User = require('../models/user.model');
+const httpStatus = require("http-status");
+const { omit } = require("lodash");
+const User = require("../models/user.model");
 
 /**
  * Load user and append to req.
@@ -51,8 +51,8 @@ exports.replace = async (req, res, next) => {
     try {
         const { user } = req.locals;
         const newUser = new User(req.body);
-        const ommitRole = user.role !== 'admin' ? 'role' : '';
-        const newUserObject = omit(newUser.toObject(), '_id', ommitRole);
+        const ommitRole = user.role !== "admin" ? "role" : "";
+        const newUserObject = omit(newUser.toObject(), "_id", ommitRole);
 
         await user.updateOne(newUserObject, { override: true, upsert: true });
         const savedUser = await User.findById(user._id);
@@ -68,7 +68,7 @@ exports.replace = async (req, res, next) => {
  * @public
  */
 exports.update = (req, res, next) => {
-    const ommitRole = req.locals.user.role !== 'admin' ? 'role' : '';
+    const ommitRole = req.locals.user.role !== "admin" ? "role" : "";
     const updatedUser = omit(req.body, ommitRole);
     const user = Object.assign(req.locals.user, updatedUser);
 

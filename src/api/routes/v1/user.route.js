@@ -1,24 +1,24 @@
-const express = require('express');
-const validate = require('express-validation');
-const controller = require('../../controllers/user.controller');
-const { authorize, ADMIN, LOGGED_USER } = require('../../middlewares/auth');
+const express = require("express");
+const validate = require("express-validation");
+const controller = require("../../controllers/user.controller");
+const { authorize, ADMIN, LOGGED_USER } = require("../../middlewares/auth");
 const {
     listUsers,
     createUser,
     replaceUser,
     updateUser,
-} = require('../../validations/user.validation');
+} = require("../../validations/user.validation");
 
 const router = express.Router();
 
 /**
  * Load user when API with userId route parameter is hit
  */
-router.param('userId', controller.load);
+router.param("userId", controller.load);
 
 
 router
-    .route('/')
+    .route("/")
     /**
      * @api {get} v1/users List Users
      * @apiDescription Get a list of users
@@ -70,7 +70,7 @@ router
 
 
 router
-    .route('/profile')
+    .route("/profile")
     /**
      * @api {get} v1/users/profile User Profile
      * @apiDescription Get logged in user profile information
@@ -93,7 +93,7 @@ router
 
 
 router
-    .route('/:userId')
+    .route("/:userId")
     /**
      * @api {get} v1/users/:id Get User
      * @apiDescription Get user information
