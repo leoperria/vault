@@ -1,12 +1,15 @@
-exports.retrieve = (req, res) => {
+const Vault = require("../models/vault.model");
 
-    return res.json({ test: "OK"});
+
+exports.retrieve = async (req, res, next) => {
+    try {
+        const vaultItem = await Vault.getByExternalId(req.params.id);
+        res.json(vaultItem);
+    } catch (error) {
+        next(error);
+    }
 }
 
 
-exports.store = (req, res) => {
-
-    console.log(req);
-    console.log(res);
-    return null
+exports.store = async (req, res) => {
 }

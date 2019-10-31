@@ -1,10 +1,10 @@
 const httpStatus = require("http-status");
-const expressValidation = require("express-validation");
 const APIError = require("../../utils/APIError");
 const { env } = require("../../config/vars");
 
 /**
  * Error handler. Send stacktrace only during development
+ *
  * @public
  */
 const handler = (err, req, res, next) => {
@@ -26,18 +26,17 @@ exports.handler = handler;
 
 /**
  * If error is not an instanceOf APIError, convert it.
+ *
  * @public
  */
 exports.converter = (err, req, res, next) => {
     let convertedError = err;
-
-    if (err instanceof expressValidation.ValidationError) {
+    if (err && err.error && err.error.isJoi) {
+        console.log(JSON.stringify(err, null, 4));
         convertedError = new APIError({
             message: "Validation Error",
-            errors: err.errors,
-            status: err.status,
-            stack: err.stack,
-        });
+            errors: err.error.details.map(d => d.message.replace(/"/g,`'`))
+         });
     } else if (!(err instanceof APIError)) {
         convertedError = new APIError({
             message: err.message,
@@ -51,6 +50,7 @@ exports.converter = (err, req, res, next) => {
 
 /**
  * Catch 404 and forward to error handler
+ *
  * @public
  */
 exports.notFound = (req, res, next) => {
