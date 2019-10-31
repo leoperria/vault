@@ -15,3 +15,4 @@ app.listen(port, () => logger.info(`Server started on port ${port} (${env})`));
  * @public
  */
 module.exports = app;
+
