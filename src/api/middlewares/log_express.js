@@ -1,13 +1,7 @@
 const morgan = require("morgan");
+const {obfuscateQueryParam} = require("../../utils/log_utils");
 
-function obfuscateQueryParam(urlToObfuscate, paramName) {
-    if (!paramName || paramName === "") {
-        throw new Error(`paramsName is not valid`);
-    }
-    return urlToObfuscate.replace(new RegExp(`(${paramName}=)([^&]*)`), "$1REDACTED");
-}
-
-function logExpress(redactedParams) {
+function logExpressRequests(redactedParams) {
     return morgan((tokens, request, response) => {
 
         let redactedUrl = tokens.url(request, response);
@@ -25,5 +19,4 @@ function logExpress(redactedParams) {
     })
 }
 
-
-module.exports = {logExpress};
+module.exports = {logExpress: logExpressRequests};

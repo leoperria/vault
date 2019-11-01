@@ -51,6 +51,16 @@ function converter(err, req, res, next) {
         convertedError = convertValidationError(err.error);
     } else if (err instanceof ValidationError) {
         convertedError = convertValidationError(err);
+    } else if (err instanceof SyntaxError) {
+        convertedError = new APIError({
+            message: "Validation Error",
+            errors: ["Error parsing JSON"]
+        });
+    } else if (err.name === "PayloadTooLargeError") {
+        convertedError = new APIError({
+            message: "Validation Error",
+            errors: ["Document is too big"]
+        });
     } else if (!(err instanceof APIError)) {
         console.error(err);
         convertedError = new APIError({

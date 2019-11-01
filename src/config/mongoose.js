@@ -4,7 +4,7 @@ const {mongo, env} = require("./vars");
 // Init Mongoose
 mongoose.Promise = Promise;
 if (env === "development") {
-    mongoose.set("debug", true);
+    mongoose.set("debug", false);
 }
 mongoose.connection.on("error", (err) => {
     console.error(`MongoDB connection error: ${err}`);

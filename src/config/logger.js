@@ -1,3 +1,4 @@
-// TODO add logging
+// TODO add logging lib
 
-module.exports = {};
+
+module.exports = {logMsg};

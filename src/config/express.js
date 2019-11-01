@@ -9,6 +9,11 @@ const {logs} = require("./vars");
 const error = require("../api/middlewares/error");
 const {logExpress} = require("../api/middlewares/log_express");
 
+
+// TODO: test  a document of 15MB
+// TODO: add proper validation
+const MAX_BODY_SIZE = 1024 * 1024 * 15; // 15MB
+
 /**
  * Express instance
  * @public
@@ -16,15 +21,13 @@ const {logExpress} = require("../api/middlewares/log_express");
 const app = express();
 
 // request logging. dev: console | production: file
-
 app.use(logExpress([
     "decryption_key",
     "encryption_key"
 ]));
 
-// parse body params and attache them to req.body
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+// parse body params and attach them to req.body
+app.use(bodyParser.json({limit: MAX_BODY_SIZE}));
 
 // gzip compression
 app.use(compress());

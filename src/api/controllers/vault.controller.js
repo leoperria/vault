@@ -1,7 +1,7 @@
 const Vault = require("../models/vault.model");
 
 /**
- * Retrieve vault item controller
+ * Item retrieve controller
  *
  * @public
  *
@@ -25,17 +25,25 @@ async function retrieve(req, res, next) {
     }
 }
 
-
+/**
+ * Item store controller
+ *
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ */
 async function store(req, res, next) {
-    // TODO: handle max size of the value document (16MB)
     try {
-        console.log(req.query);
-        console.log(req.params);
-        console.log(req.body);
-        res.json({});
+        const result = await Vault.storeById(
+            req.params.id,
+            req.query.encryption_key,
+            req.body
+        );
+        res.json(result);
     } catch (error) {
         next(error);
     }
 }
 
-module.exports = {retrieve};
+module.exports = {retrieve, store};

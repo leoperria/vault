@@ -16,7 +16,7 @@ const idParamSearchSchema = Joi
     .pattern(/^[A-Za-z0-9\-]*\*?$/)
     .required();
 
-const decryptionKeyParamSchema = Joi.string().min(1).max(100).required();
+const encryptionKeyParamSchema = Joi.string().min(1).max(100).required();
 
 const skipParamSchema = Joi
     .number()
@@ -32,25 +32,9 @@ const limitParamSchema = Joi
     .default(MAX_PAGE_SIZE);
 
 module.exports = {
-
-    decryptionKeyParamSchema,
-
-    idparamSchema,
-
+    encryptionKeyParamSchema,
+    idParamSchema,
     idParamSearchSchema,
-
     skipParamSchema,
-
-    limitParamSchema,
-
-    vaultGetByIdSchema: Joi.object({
-        id: idParamSearchSchema
-    }),
-
-    vaultQueryParamsSchema: Joi.object({
-        decryption_key: decryptionKeyParamSchema,
-        skip: skipParamSchema,
-        limit: limitParamSchema
-    })
-
+    limitParamSchema
 };
