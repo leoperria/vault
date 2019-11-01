@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-const logger = require("./logger");
-const { mongo, env } = require("./vars");
+const {mongo, env} = require("./vars");
 
 // Init Mongoose
 mongoose.Promise = Promise;
@@ -8,7 +7,7 @@ if (env === "development") {
     mongoose.set("debug", true);
 }
 mongoose.connection.on("error", (err) => {
-    logger.error(`MongoDB connection error: ${err}`);
+    console.error(`MongoDB connection error: ${err}`);
     process.exit(-1);
 });
 
@@ -24,7 +23,7 @@ exports.connect = () => {
         keepAlive: 1,
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useFindAndModify: false,
+        useFindAndModify: false
     });
     return mongoose.connection;
 };
