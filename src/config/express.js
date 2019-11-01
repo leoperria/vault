@@ -1,13 +1,13 @@
 const express = require("express");
-const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const compress = require("compression");
 const methodOverride = require("method-override");
 const cors = require("cors");
 const helmet = require("helmet");
 const routes = require("../api/routes/v1");
-const { logs } = require("./vars");
+const {logs} = require("./vars");
 const error = require("../api/middlewares/error");
+const {logExpress} = require("../api/middlewares/log_express");
 
 /**
  * Express instance
@@ -16,11 +16,15 @@ const error = require("../api/middlewares/error");
 const app = express();
 
 // request logging. dev: console | production: file
-app.use(morgan(logs));
+
+app.use(logExpress([
+    "decryption_key",
+    "encryption_key"
+]));
 
 // parse body params and attache them to req.body
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
 // gzip compression
 app.use(compress());

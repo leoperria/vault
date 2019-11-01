@@ -25,11 +25,17 @@ async function retrieve(req, res, next) {
     }
 }
 
-/*
-exports.store = async (req, res) => {
-// TODO: handle max size of the value document
-};
-*/
 
+async function store(req, res, next) {
+    // TODO: handle max size of the value document (16MB)
+    try {
+        console.log(req.query);
+        console.log(req.params);
+        console.log(req.body);
+        res.json({});
+    } catch (error) {
+        next(error);
+    }
+}
 
 module.exports = {retrieve};

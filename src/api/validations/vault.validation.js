@@ -6,6 +6,13 @@ const idParamSchema = Joi
     .string()
     .min(1)
     .max(100)
+    .pattern(/^[A-Za-z0-9\-]*$/)
+    .required();
+
+const idParamSearchSchema = Joi
+    .string()
+    .min(1)
+    .max(100)
     .pattern(/^[A-Za-z0-9\-]*\*?$/)
     .required();
 
@@ -28,14 +35,16 @@ module.exports = {
 
     decryptionKeyParamSchema,
 
-    idParamSchema,
+    idparamSchema,
+
+    idParamSearchSchema,
 
     skipParamSchema,
 
     limitParamSchema,
 
     vaultGetByIdSchema: Joi.object({
-        id: idParamSchema
+        id: idParamSearchSchema
     }),
 
     vaultQueryParamsSchema: Joi.object({

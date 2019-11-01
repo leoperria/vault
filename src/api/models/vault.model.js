@@ -19,15 +19,19 @@ vaultSchema.statics = {
     // TODO: add id index for fast retrieval and sorting
 
     /**
-     * Get Item by id
+     * Get Item by id and decrypt it
      *
      * Suppors externaId in the form of a wildcard matcher i.e. "key-*"
      *
+     * @param id
+     * @param decryptionKey
+     * @param limit
+     * @param skip
      */
     async getById(id, decryptionKey, limit, skip) {
 
         // Make sure the id is either a proper single id or a pattern like "prefix*"
-        const _id = Joi.attempt(id, validation.idParamSchema);
+        const _id = Joi.attempt(id, validation.idParamSearchSchema);
 
         // other validations
         const _decryptionKey = Joi.attempt(decryptionKey, validation.decryptionKeyParamSchema);
@@ -70,6 +74,25 @@ vaultSchema.statics = {
 
         return res;
 
+    },
+
+    /**
+     * Encrypt and store an item
+     *
+     * @param id
+     * @param encryption_key
+     * @param value
+     * @returns {Promise<void>}
+     */
+    async storeById(id, encryption_key, value) {
+
+        // validations
+        const _id = Joi.attempt(id, validation.idparamSchema);
+        const _encryption_key = Joi.attempt(encryption_key, validation.decryptionKeyParamSchema);
+
+        console.log("_id", _id);
+        console.log("_encryption_key", _encryption_key);
+        console.log(JSON.stringify(value));
     }
 
 };
