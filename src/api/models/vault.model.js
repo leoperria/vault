@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
 const validation = require("../validations/vault.validation");
 const Joi = require("@hapi/joi");
+const {MAX_DOCUMENT_SIZE} = require("./constants");
 const {ValidationError} = require("@hapi/joi/lib/errors");
 const {encrypt} = require("../services/crypt");
 const {redactString, logMsg} = require("../../utils/log_utils");
 const {decrypt} = require("../services/crypt");
 
-// Mongodb max document size is 16MB but we leave some room for metadata
-const MAX_ENCRYPTED_SIZE = Math.floor(15.8 * 1024 * 1024);
+
 
 const vaultItemSchema = new mongoose.Schema({
     _id: {
@@ -124,10 +124,10 @@ vaultItemSchema.statics = {
 
         console.log(encryptedValue.encrypted.length);
 
-        if (encryptedValue.encrypted.length > MAX_ENCRYPTED_SIZE) {
+        if (encryptedValue.encrypted.length > MAX_DOCUMENT_SIZE) {
             throw new ValidationError("ValidatioError", [{
                 message: `Encrypted document is bigger than max ` +
-                    `size allowed (${MAX_ENCRYPTED_SIZE} bytes)`
+                    `size allowed (${MAX_DOCUMENT_SIZE} bytes)`
             }]);
         }
 

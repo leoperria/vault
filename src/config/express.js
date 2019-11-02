@@ -7,12 +7,8 @@ const helmet = require("helmet");
 const routes = require("../api/routes/v1");
 const {logs} = require("./vars");
 const error = require("../api/middlewares/error");
+const {MAX_DOCUMENT_SIZE} = require("../api/models/constants");
 const {logExpress} = require("../api/middlewares/log_express");
-
-
-// TODO: test  a document of 15MB
-// TODO: add proper validation
-const MAX_BODY_SIZE = 1024 * 1024 * 15; // 15MB
 
 /**
  * Express instance
@@ -27,7 +23,7 @@ app.use(logExpress([
 ]));
 
 // parse body params and attach them to req.body
-app.use(bodyParser.json({limit: MAX_BODY_SIZE}));
+app.use(bodyParser.json({limit: MAX_DOCUMENT_SIZE}));
 
 // gzip compression
 app.use(compress());
