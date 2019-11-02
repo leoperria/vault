@@ -1,5 +1,7 @@
 const Vault = require("../models/vault.model");
 
+// TODO: add integration tests
+
 /**
  * Item retrieve controller
  *

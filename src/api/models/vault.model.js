@@ -7,6 +7,8 @@ const {encrypt} = require("../services/crypt");
 const {redactString, logMsg} = require("../../utils/log_utils");
 const {decrypt} = require("../services/crypt");
 
+// TODO: add integration tests
+
 const vaultItemSchema = new mongoose.Schema({
     _id: {
         type: String,
