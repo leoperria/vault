@@ -15,7 +15,6 @@ describe("Encryption module ", () =>{
         expect(decryptedBuf.toString()).toBe(TEST_MSG);
     });
 
-
     it("should throw when the key is different", () => {
         const attempt  = () => {
             const encryptedObj = encrypt(Buffer.from(TEST_MSG), ENCRYPTION_KEY);

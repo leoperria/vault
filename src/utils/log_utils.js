@@ -18,11 +18,11 @@ function redactString(str) {
 
 function obfuscateQueryParam(urlToObfuscate, paramName) {
     if (!paramName || paramName === "") {
-        throw new Error(`paramsName is not valid`);
+        throw new Error("paramsName is not valid");
     }
     return urlToObfuscate.replace(
         new RegExp(`(${paramName}=)([^&]*)`),
-        `$1<REDACTED>`
+        "$1<REDACTED>"
     );
 }
 

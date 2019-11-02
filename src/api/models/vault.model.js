@@ -6,6 +6,7 @@ const {ValidationError} = require("@hapi/joi/lib/errors");
 const {encrypt} = require("../services/crypt");
 const {redactString, logMsg} = require("../../utils/log_utils");
 const {decrypt} = require("../services/crypt");
+const logger = require("../../config/logger");
 
 // TODO: add integration tests
 
@@ -42,11 +43,11 @@ vaultItemSchema.statics = {
      */
     async getById(id, decryptionKey, limit, skip) {
 
-        console.log(logMsg(`Vault.getById()`, {
+        logger.info("Vault.getById()", {params: {
             id,
             decryptionKey: redactString(decryptionKey),
             limit, skip
-        }));
+        }});
 
         // Make sure the id is either a proper single id or a pattern like "prefix*"
         const _id = Joi.attempt(id, validation.idParamSearchSchema);
@@ -109,11 +110,11 @@ vaultItemSchema.statics = {
 
         const objBuffer = Buffer.from(JSON.stringify(value));
 
-        console.log(logMsg(`Vault.storeById()`, {
+        logger.info("Vault.storeById()", {params: {
             id,
             encryptionKey: redactString(encryptionKey),
             value: `JSON(${objBuffer.length} bytes)`
-        }));
+        }});
 
         // validations
         const _id = Joi.attempt(id, validation.idParamSchema);
@@ -122,11 +123,9 @@ vaultItemSchema.statics = {
         // Encrypt the value
         const encryptedValue = encrypt(objBuffer, _encryptionKey);
 
-        console.log(encryptedValue.encrypted.length);
-
         if (encryptedValue.encrypted.length > MAX_DOCUMENT_SIZE) {
             throw new ValidationError("ValidatioError", [{
-                message: `Encrypted document is bigger than max ` +
+                message: "Encrypted document is bigger than max " +
                     `size allowed (${MAX_DOCUMENT_SIZE} bytes)`
             }]);
         }

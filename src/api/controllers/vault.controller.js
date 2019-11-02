@@ -14,7 +14,6 @@ const Vault = require("../models/vault.model");
  */
 async function retrieve(req, res, next) {
     try {
-        console.log(req.params);
         const vaultItem = await Vault.getById(
             req.params.id,
             req.query.decryption_key,

@@ -1,4 +1,5 @@
 const morgan = require("morgan");
+const logger = require("../../config/logger");
 const {obfuscateQueryParam} = require("../../utils/log_utils");
 
 function logExpressRequests(redactedParams) {
@@ -10,13 +11,13 @@ function logExpressRequests(redactedParams) {
         }
 
         return [
-            tokens.method(request, response),
+            "HTTP " +  tokens.method(request, response),
             redactedUrl,
             tokens.status(request, response),
             tokens.res(request, response, "content-length"), "-",
             tokens["response-time"](request, response), "ms"
         ].join(" ");
-    })
+    },  { stream: logger.stream })
 }
 
 module.exports = {logExpress: logExpressRequests};
