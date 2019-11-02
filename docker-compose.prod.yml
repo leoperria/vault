@@ -1,6 +1,6 @@
 version: "2"
 services:
-  boilerplate-api:
+  vault-api:
     command: yarn start
     environment:
       - NODE_ENV=production
