@@ -11,7 +11,7 @@ const logger = require("../../config/logger");
 const vaultItemSchema = new mongoose.Schema({
     _id: {
         type: String,
-        required: true
+        required: true,
     },
     value: {
         iv: {

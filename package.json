@@ -4,6 +4,8 @@
     "description": "Sample vault API",
     "author": "Leonardo Perria <leonardo.perria@gmail.com>",
     "main": "src/index.js",
+    "private": false,
+    "license": "MIT",
     "engines": {
         "node": ">=8",
         "yarn": "*"
