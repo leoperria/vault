@@ -1,7 +1,7 @@
 version: "2"
 services:
   vault-api:
-    command: yarn test
+    command: yarn test --coverage
     environment:
       - NODE_ENV=test
       - MONGO_URI_TESTS=mongodb://mongodb:27017/vault_test
