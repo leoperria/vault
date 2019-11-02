@@ -20,8 +20,11 @@ const IV_LENGTH = 16;
  * @returns {{encrypted: Buffer, iv: Buffer}}
  */
 function encrypt(inputBuffer, encryptionKey) {
-    if  (encryptionKey.length === 0) {
-        throw new Error(`encryptionKey lenght can't  be 0`);
+    if (!inputBuffer) {
+        throw new Error(`Input buffer must be provided`);
+    }
+    if  (!encryptionKey || encryptionKey.length === 0) {
+        throw new Error(`encryptionKey not valid`);
     }
     const aesKey = crypto.createHash("sha256").update(encryptionKey).digest();
     let iv = crypto.randomBytes(IV_LENGTH);
@@ -44,8 +47,11 @@ function encrypt(inputBuffer, encryptionKey) {
  * @returns {Buffer}
  */
 function decrypt(encryptedObj, encryptionKey) {
-    if  (encryptionKey.length === 0) {
-        throw new Error(`encryptionKey lenght can't  be 0`);
+    if (!encryptedObj) {
+        throw new Error(`Encrypted object must be provided`);
+    }
+    if  (!encryptionKey || encryptionKey.length === 0) {
+        throw new Error(`encryptionKey not valid`);
     }
     const aesKey = crypto.createHash("sha256").update(encryptionKey).digest();
     let decipher = crypto.createDecipheriv("aes-256-cbc", aesKey, encryptedObj.iv);
