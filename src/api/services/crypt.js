@@ -1,4 +1,6 @@
 const crypto = require("crypto");
+const logger = require("../../config/logger");
+const {redactString} = require("../../utils/log_utils");
 
 const IV_LENGTH = 16;
 
@@ -16,17 +18,27 @@ const IV_LENGTH = 16;
  * given IV will be.
  *
  * @param inputBuffer {Buffer}
- * @param encryptionKey {string}
+ * @param key {string}
  * @returns {{encrypted: Buffer, iv: Buffer}}
  */
-function encrypt(inputBuffer, encryptionKey) {
+function encrypt(inputBuffer, key) {
+
     if (!inputBuffer) {
         throw new Error("Input buffer must be provided");
     }
-    if  (!encryptionKey || encryptionKey.length === 0) {
-        throw new Error("encryptionKey not valid");
+
+    if (!key || key.length === 0) {
+        throw new Error("key not valid");
     }
-    const aesKey = crypto.createHash("sha256").update(encryptionKey).digest();
+
+    logger.debug("encrypt()", {
+        param: {
+            inputBuffer: `Buffer(${inputBuffer.length} bytes)`,
+            key: redactString(key)
+        }
+    });
+
+    const aesKey = crypto.createHash("sha256").update(key).digest();
     let iv = crypto.randomBytes(IV_LENGTH);
     let cipher = crypto.createCipheriv("aes-256-cbc", aesKey, iv);
     let encrypted = cipher.update(inputBuffer);
@@ -43,17 +55,27 @@ function encrypt(inputBuffer, encryptionKey) {
  * @public
  *
  * @param encryptedObj {{encrypted: Buffer, iv: Buffer}}
- * @param encryptionKey {string}
+ * @param key {string}
  * @returns {Buffer}
  */
-function decrypt(encryptedObj, encryptionKey) {
+function decrypt(encryptedObj, key) {
+
     if (!encryptedObj) {
         throw new Error("Encrypted object must be provided");
     }
-    if  (!encryptionKey || encryptionKey.length === 0) {
-        throw new Error("encryptionKey not valid");
+
+    if (!key || key.length === 0) {
+        throw new Error("key not valid");
     }
-    const aesKey = crypto.createHash("sha256").update(encryptionKey).digest();
+
+    logger.debug("decrypt()", {
+        param: {
+            encryptedBuffer: `Buffer(${encryptedObj.encrypted.length} bytes)`,
+            key: redactString(key)
+        }
+    });
+
+    const aesKey = crypto.createHash("sha256").update(key).digest();
     let decipher = crypto.createDecipheriv("aes-256-cbc", aesKey, encryptedObj.iv);
     let decrypted = decipher.update(encryptedObj.encrypted);
     return Buffer.concat([decrypted, decipher.final()]);

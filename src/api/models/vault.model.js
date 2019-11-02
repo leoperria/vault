@@ -8,8 +8,6 @@ const {redactString, logMsg} = require("../../utils/log_utils");
 const {decrypt} = require("../services/crypt");
 const logger = require("../../config/logger");
 
-// TODO: add integration tests
-
 const vaultItemSchema = new mongoose.Schema({
     _id: {
         type: String,

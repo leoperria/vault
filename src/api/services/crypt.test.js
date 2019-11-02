@@ -33,8 +33,8 @@ describe("Encryption module ", () =>{
         const attempt3  = () => {
             encrypt(undefined, ENCRYPTION_KEY);
         };
-        expect(attempt1).toThrow(/encryptionKey not valid/);
-        expect(attempt2).toThrow(/encryptionKey not valid/);
+        expect(attempt1).toThrow(/key not valid/);
+        expect(attempt2).toThrow(/key not valid/);
         expect(attempt3).toThrow(/Input buffer must be provided/);
     });
 
@@ -46,7 +46,7 @@ describe("Encryption module ", () =>{
         const attempt2  = () => {
             decrypt(undefined, ENCRYPTION_KEY);
         };
-        expect(attempt1).toThrow(/encryptionKey not valid/);
+        expect(attempt1).toThrow(/key not valid/);
         expect(attempt2).toThrow(/Encrypted object must be provided/);
     });
 

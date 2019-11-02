@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const {mongo, env} = require("./vars");
+const logger = require("./logger");
 
 // Init Mongoose
 mongoose.Promise = Promise;
@@ -17,7 +18,8 @@ mongoose.connection.on("error", (err) => {
  * @returns {object} Mongoose connection
  * @public
  */
-exports.connect = () => {
+function connect() {
+    logger.info(`Connecting to mongodb uri ${mongo.uri}`);
     mongoose.connect(mongo.uri, {
         useCreateIndex: true,
         keepAlive: 1,
@@ -26,4 +28,6 @@ exports.connect = () => {
         useFindAndModify: false
     });
     return mongoose.connection;
-};
+}
+
+module.exports = {connect};

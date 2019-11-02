@@ -6,14 +6,14 @@ const idParamSchema = Joi
     .string()
     .min(1)
     .max(100)
-    .pattern(/^[A-Za-z0-9\-]*$/)
+    .pattern(/^[A-Za-z0-9\-_]*$/)
     .required();
 
 const idParamSearchSchema = Joi
     .string()
     .min(1)
     .max(100)
-    .pattern(/^[A-Za-z0-9\-]*\*?$/)
+    .pattern(/^[A-Za-z0-9\-_]*\*?$/)
     .required();
 
 const encryptionKeyParamSchema = Joi.string().min(1).max(100).required();
