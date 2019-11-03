@@ -68,6 +68,7 @@ $ curl --request GET \
 
 ```bash
 $ yarn docker:test
+$ yarn docker:coverage
 ```
 
 #### Run in production
