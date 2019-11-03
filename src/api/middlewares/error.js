@@ -2,7 +2,7 @@ const httpStatus = require("http-status");
 const APIError = require("../../utils/APIError");
 const {ValidationError} = require("@hapi/joi/lib/errors");
 const {env} = require("../../config/vars");
-
+const logger = require("../../config/logger");
 /**
  * Error handler. Send stacktrace only during development
  *
@@ -62,7 +62,7 @@ function converter(err, req, res, next) {
             errors: ["Document is too big"]
         });
     } else if (!(err instanceof APIError)) {
-        console.error(err);
+        logger.error(err);
         convertedError = new APIError({
             message: "Server error"
         });

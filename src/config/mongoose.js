@@ -5,10 +5,10 @@ const logger = require("./logger");
 // Init Mongoose
 mongoose.Promise = Promise;
 if (env === "development") {
-    mongoose.set("debug", false);
+    mongoose.set("debug", true);
 }
 mongoose.connection.on("error", (err) => {
-    console.error(`MongoDB connection error: ${err}`);
+    logger.error(`MongoDB connection error: ${err}`);
     process.exit(-1);
 });
 

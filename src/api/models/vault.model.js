@@ -4,7 +4,7 @@ const Joi = require("@hapi/joi");
 const {MAX_DOCUMENT_SIZE} = require("./constants");
 const {ValidationError} = require("@hapi/joi/lib/errors");
 const {encrypt} = require("../services/crypt");
-const {redactString, logMsg} = require("../../utils/log_utils");
+const {redactString} = require("../../utils/log_utils");
 const {decrypt} = require("../services/crypt");
 const logger = require("../../config/logger");
 
@@ -26,8 +26,6 @@ const vaultItemSchema = new mongoose.Schema({
 });
 
 vaultItemSchema.statics = {
-
-    // TODO: add id index for fast retrieval and sorting
 
     /**
      * Get Item by id and decrypt it
@@ -83,13 +81,13 @@ vaultItemSchema.statics = {
                 } catch (err) {
                     if (err.message.indexOf("Invalid IV length" > 0) ||
                         err.message.indexOf("bad decrypt") > 0) {
-                        console.error(`BAD DECRYPT:  ${err.message}`);
+                        logger.error(`BAD DECRYPT:  ${err.message}`);
                     } else {
                         throw new err;
                     }
                 }
             } else {
-                throw new Error(`Can't find value in stored item _id=${v._id}`);
+                throw new Error(`Can't find value in stored item _id=${v._id}, this could be a bug`);
             }
         }
 

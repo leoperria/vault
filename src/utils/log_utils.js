@@ -1,13 +1,3 @@
-const _ = require("lodash");
-
-function formatLogObj(obj) {
-    return _.keys(obj).map(k => `${k}=${obj[k]}`).join(" ");
-}
-
-function logMsg(msg, params) {
-    return msg + " "+ formatLogObj(params);
-}
-
 function redactString(str) {
     if (!str || str.length === 0) {
         return "";
@@ -27,8 +17,6 @@ function obfuscateQueryParam(urlToObfuscate, paramName) {
 }
 
 module.exports = {
-    logMsg,
     redactString,
-    formatLogObj,
     obfuscateQueryParam
 };

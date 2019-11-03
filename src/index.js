@@ -8,12 +8,12 @@ const logger = require("./config/logger");
 mongoose.connect();
 
 // listen to requests
-app.listen(port, () => logger.debug(`Server started on port ${port} (${env})`));
+const server = app.listen(port, () => logger.debug(`Server started on port ${port} (${env})`));
 
 /**
  * Exports express
  *
  * @public
  */
-module.exports = app;
+module.exports = {app, server};
 

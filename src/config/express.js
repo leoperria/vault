@@ -15,7 +15,7 @@ const {logExpress} = require("../api/middlewares/log_express");
  */
 const app = express();
 
-// request logging. dev: console | production: file
+// request logging
 app.use(logExpress([
     "decryption_key",
     "encryption_key"
