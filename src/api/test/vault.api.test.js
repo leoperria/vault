@@ -1,6 +1,7 @@
 const request = require("supertest");
 const app = require("./../../config/express");
 const mongooseModule = require("./../../config/mongoose");
+const Vault = require("../models/vault.model");
 
 const ENCRYPTION_KEY = "Password!!!";
 
@@ -21,6 +22,12 @@ beforeAll(async () => {
 afterAll(async () => {
     await mongooseModule.mongoose.connection.close();
 });
+
+// delete the collection on every test
+beforeEach(async () => {
+    await Vault.deleteMany();
+});
+
 
 
 describe("Vault API", () => {
