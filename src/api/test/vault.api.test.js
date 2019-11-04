@@ -1,5 +1,6 @@
 const request = require("supertest");
-const {app, server} = require("../../index");
+const app = require("./../../config/express");
+const mongooseModule = require("./../../config/mongoose");
 
 const ENCRYPTION_KEY = "Password!!!";
 
@@ -13,8 +14,12 @@ const TEST_OBJ = {
     }
 };
 
+beforeAll(async () => {
+ return mongooseModule.connect();
+});
+
 afterAll(async () => {
-    server.close();
+    await mongooseModule.mongoose.connection.close();
 });
 
 
