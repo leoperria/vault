@@ -24,6 +24,15 @@ router
         })),
         controller.store
     )
+    .post(
+        validator.params(Joi.object({id: idParamSchema})),
+        validator.query(Joi.object({
+            encryption_key: encryptionKeyParamSchema,
+            skip: skipParamSchema,
+            limit: limitParamSchema
+        })),
+        controller.store
+    )
     .get(
         validator.params(Joi.object({id: idParamSearchSchema})),
         validator.query(Joi.object({
